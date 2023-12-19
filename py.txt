@@ -1,0 +1,22 @@
+python app.py
+Este comando é usado para executar o arquivo app.py usando o interpretador Python. O arquivo app.py geralmente contém o código principal do seu aplicativo Flask12.
+
+cd myflaskapp
+Este comando é usado para mudar o diretório atual para myflaskapp. É uma prática comum organizar o código do projeto em um diretório específico345.
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+venv\Scripts\activate
+Este comando é usado para ativar o ambiente virtual Python chamado venv. Os ambientes virtuais são usados para isolar as dependências do projeto678.
+
+deactivate
+Este comando é usado para desativar o ambiente virtual Python atual91011.
+
+pip install google-cloud-vision
+Este comando é usado para instalar a biblioteca google-cloud-vision usando o gerenciador de pacotes pip. A biblioteca google-cloud-vision é usada para interagir com a API Google Cloud Vision121314.
+
+pip install Flask
+Este comando é usado para instalar o framework web Flask usando o gerenciador de pacotes pip. Flask é um framework popular para desenvolvimento web em Python151617.
+
+pip list
+Este comando é usado para listar todos os pacotes Python instalados no ambiente virtual atual

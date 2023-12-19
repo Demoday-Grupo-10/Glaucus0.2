@@ -1,0 +1,431 @@
+/* Importando a fonte Inter do Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap");
+
+/* Reset CSS para garantir consistência entre navegadores */
+*,
+*:before,
+*:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/* Definindo variáveis CSS para cores e gradientes */
+:root {
+	--background: #00000044;
+	--glow-object: #FE831B;
+	--glow-object-grad: linear-gradient(to bottom right, #21A2D9, #FE831B);
+	--glow-object-grad-text: linear-gradient(to bottom right, #21A2D9, #FE831B);
+	--glow-shadow: #1E90FF;
+	--glow-shadow-text: #1E90FFbb;
+	--text: #d5d1dd;
+}
+
+/* Estilos para o corpo do documento */
+body {
+	width: 100%;
+	color: var(--text);
+	font-family: "Inter";
+	display: grid;
+	grid-template-columns: 4.5rem 1fr;
+	margin: 0;
+}
+
+/* Estilos para o plano de fundo */
+.bg {
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	background: grey;
+}
+
+/* Estilos para a navegação */
+nav {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	place-self: stretch;
+	border-right: #FE831B solid 3px;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 0.5rem;
+	gap: 5rem;
+}
+
+/* Estilos para os links de navegação */
+nav>a {
+	position: relative;
+	display: grid;
+	place-content: center;
+	color: var(--text);
+	height: 3.5rem;
+	border-radius: 0.75rem;
+	font-size: 1.5rem;
+	text-decoration: none;
+
+}
+
+
+/* Estilos para o painel do dashboard */
+.dashboard {
+	place-self: stretch;
+	display: grid;
+	place-content: center;
+	grid-auto-rows: 9rem;
+	grid-template-columns: repeat(auto-fit, 9rem);
+	grid-auto-flow: row;
+	grid-gap: 0.75rem;
+	padding: 0.5rem;
+}
+
+/* Estilos para os cards do dashboard */
+.card {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	border-radius: 0.75rem;
+	border: #2652A4 solid 3px;
+	background: var(--background);
+	backdrop-filter: blur(2rem);
+}
+
+.b {
+    background-color: #4CAF50; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    padding: 14px 20px; /* Espaçamento interno do botão */
+    margin: 8px 0; /* Margem externa do botão */
+    border: none; /* Remove a borda padrão do botão */
+    cursor: pointer; /* Muda o cursor para uma mão quando você passa o mouse sobre o botão */
+    width: 50%; /* Faz o botão ocupar toda a largura do contêiner pai */
+	border-radius: 15px;
+}
+
+.b:hover {
+    opacity: 0.8; /* Adiciona um efeito de transparência quando você passa o mouse sobre o botão */
+}
+
+/* Estilos para os títulos dos cards */
+.card>h2 {
+	margin: 0;
+	padding: 0.375rem 0.5rem;
+	font-size: 1.125rem;
+	color: black;
+}
+
+/* Estilos para as estatísticas grandes nos cards */
+.card>.bigstats {
+	padding-top: 1.75rem;
+	display: grid;
+	grid-auto-flow: row;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-row-gap: 2rem;
+	place-content: center;
+	padding-bottom: 0.5rem;
+}
+
+/* Estilos para cada estatística individual */
+.card>.bigstats>.stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+/* Estilos para os números das estatísticas */
+.statnum {
+	background: var(--glow-object-grad-text);
+	font-size: 2rem;
+	font-weight: 600;
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	filter: drop-shadow(var(--glow-shadow-text) 0px 0px 5px);
+	line-height: 0.9;
+}
+
+/* Estilos para o texto das estatísticas */
+.card>.bigstats>.stat>.stattext {
+	font-weight: 500;
+}
+
+/* Estilos para a lista nos cards */
+.card>ul {
+	margin: 0;
+	padding: 0 0.5rem;
+}
+
+input[type=text] {
+	border-radius: 5px;
+	box-shadow: 1px 1px 2px #333333;
+	background: #ffffff;
+	border: 2px solid #FE831B;
+	width: 230px;
+	height: 30px;
+}
+
+/* Estilos para os itens da lista nos cards */
+.card>ul>li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0.5rem 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-top: 1px solid #ffffff22;
+	font-weight: 500;
+}
+
+/* Estilos para o círculo de progresso nos cards */
+.progresscircle {
+	--progress: 33;
+	position: relative;
+	width: 4.5rem;
+	height: 4.5rem;
+	display: grid;
+	place-content: center;
+	font-weight: 600;
+	margin: -0.375rem -0.25rem;
+}
+
+/* Estilos para o SVG do círculo de progresso */
+.progresscircle>svg {
+	position: absolute;
+	inset: 0;
+	transform: rotate(-90deg);
+}
+
+h1{color: black;}
+
+.f {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+}
+
+/* Estilos para o círculo do SVG */
+.progresscircle>svg>circle {
+	fill: none;
+	stroke: var(--glow-object);
+	filter: drop-shadow(var(--glow-shadow) 0 0 5px);
+	stroke-width: 8px;
+	stroke-dasharray: 250;
+	stroke-dashoffset: calc(250 - 2.5 * var(--progress));
+}
+
+/* Estilos para a tabela nos cards */
+.card>table {
+	flex-grow: 1;
+	margin: 0 0.5rem;
+	border-spacing: 0;
+}
+
+/* Estilos para as células da tabela nos cards */
+.card>table th,
+.card>table td {
+	margin: 0;
+	text-align: center;
+	border-top: 1px solid #ffffff22;
+}
+
+/* Estilos para o perfil nos cards */
+.card.profile {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center !important;
+}
+
+/* Estilos para o título do perfil */
+.card.profile>h2 {
+	font-weight: 600;
+	font-size: 1.5rem;
+}
+
+/* Estilos para o parágrafo do perfil */
+.card.profile>p {
+	margin: 0;
+	padding-left: 0.5rem;
+	font-weight: 500;
+	transform: translateY(-0.375rem);
+}
+
+/* Estilos para a imagem */
+.myImage {
+	width: 250px;
+	height: 200px;
+	border-radius: 15px;
+}
+
+/* Estilos para a div entidadeswebweb */
+.entidadeswebweb {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	margin: auto;
+	width: 500px;
+	height: 300px;
+}
+
+b {
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
+
+.postscanner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+}
+
+/* Estilos para a div resultado */
+.resultado {
+	position: absolute;
+	top: 20%;
+	left: 20%;
+	margin: auto;
+	width: 300px;
+	height: 300px;
+}
+
+/* Estilos para o conteúdo centralizado */
+.center-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+/* Estilos para o dashboard2 */
+.dashboard2 {
+	margin-top: 20px;
+	height: 82vh;
+}
+
+/* Estilos para o dashboard3 */
+.dashboard3 {
+	width: 30vh;
+	margin-bottom: 30px;
+}
+
+/* Estilos para a div maedadashboard */
+.maedadashboard {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+/* Estilos para a área de chat */
+.areaDeResposta, .areaDePergunta {
+    border-radius: 15px;
+    border: 2px solid var(--glow-object);
+    background-color: #f8f8f8;
+    padding: 10px;
+    font-size: 1.2em;
+    color: var(--text);
+    width: 90%;
+    margin: 10px auto;
+}
+
+/* Estilos para a área de resposta */
+.areaDeResposta {
+    height: 300px;
+    overflow-y: auto;
+}
+
+/* Estilos para a área de pergunta */
+.areaDePergunta {
+    height: 100px;
+}
+
+/* Estilos para o botão de envio */
+input[type="submit"] {
+    border-radius: 15px;
+    border: none;
+    padding: 10px 20px;
+    background-color: var(--glow-object);
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #FE831B;
+}
+
+/* Estilos para o contêiner do mapa */
+#map {
+    height: 95% !important; /* Altura do mapa */
+    width: 95% !important; /* Largura do mapa */
+    margin: 0 auto; /* Centraliza o mapa horizontalmente */
+    border-radius: 15px; /* Borda arredondada para o mapa */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Sombra ao redor do mapa */
+}
+
+/* Estilos para o botão de pesquisa */
+#searchInput {
+    position: absolute; /* Posiciona o campo de pesquisa por cima do mapa */
+    top: 10px; /* Distância do topo do mapa */
+    left: 50%; /* Centraliza o campo de pesquisa */
+    transform: translateX(-50%); /* Ajusta a centralização do campo de pesquisa */
+    z-index: 1; /* Garante que o campo de pesquisa fique por cima do mapa */
+	margin-top: 2%;
+    width: 50%; /* Largura do campo de pesquisa */
+    padding: 10px; /* Espaçamento interno do campo de pesquisa */
+    border-radius: 15px; /* Bordas arredondadas para o campo de pesquisa */
+    border: none; /* Remove a borda padrão do campo de pesquisa */
+    font-size: 1em; /* Tamanho da fonte do campo de pesquisa */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra do campo de pesquisa */
+}
+
+/* Estilos para o botão de localização atual */
+input[type="button"] {
+	margin-top: 2%;
+    position: absolute; /* Posiciona o botão por cima do mapa */
+    top: 50px; /* Distância do topo do mapa */
+    left: 50%; /* Centraliza o botão */
+    transform: translateX(-50%); /* Ajusta a centralização do botão */
+    z-index: 1; /* Garante que o botão fique por cima do mapa */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    border-radius: 15px; /* Bordas arredondadas para o botão */
+    border: none; /* Remove a borda padrão do botão */
+    background-color: var(--glow-object); /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    font-size: 1em; /* Tamanho da fonte do botão */
+    cursor: pointer; /* Muda o cursor para uma mão quando você passa o mouse sobre o botão */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra do botão */
+    transition: background-color 0.3s ease; /* Transição suave da cor de fundo do botão */
+}
+
+input[type="button"]:hover {
+    background-color: #FE831B; /* Muda a cor de fundo do botão quando você passa o mouse sobre ele */
+}
+
+
+/* Estilos para os marcadores do mapa */
+.gm-style .gm-style-iw-c {
+    background-color: #2652A4; /* Cor de fundo dos marcadores */
+    border: 2px solid #FE831B; /* Borda dos marcadores */
+    border-radius: 15px; /* Borda arredondada dos marcadores */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra ao redor dos marcadores */
+}
+
+/* Estilos para o texto dos marcadores */
+.gm-style .gm-style-iw-d::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)); /* Gradiente de fundo para o texto dos marcadores */
+}
+

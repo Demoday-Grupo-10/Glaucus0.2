@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <!-- Metadados básicos -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título da página -->
+  <title>Image Detection</title>
+
+  <!-- Importando o CSS e o JavaScript -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script2.js') }}"></script>
+</head>
+
+<body>
+  <!-- Fundo da página -->
+  <div class="bg"></div>
+
+  <!-- Navegação -->
+  <nav>
+    <!-- Links de navegação -->
+    <a href="/"><iconify-icon icon="mingcute:diary-fill"></iconify-icon></a>
+    <a href="/scaner" class="active"><iconify-icon icon="ic:round-camera"></iconify-icon></a>
+    <a href="/chat"><iconify-icon icon="fluent-emoji-high-contrast:trident-emblem"></iconify-icon></a>
+    <a href="/mapa"><iconify-icon icon="solar:map-bold"></iconify-icon></a>
+   
+  </nav>
+
+  <!-- Conteúdo principal -->
+  <main class="maedadashboard">
+
+    <!-- Área de resposta -->
+    <textarea class="areaDeResposta" id="result" rows="10" disabled placeholder="Resposta do Glaucus...">
+  GLAUCUS: {{ assistant_response }}
+    </textarea>
+
+    <!-- Formulário de chat -->
+    <form action="/chat" method="post">
+      <textarea class="areaDePergunta" id="inputQuestion" name="user_input" placeholder="Pergunte algo"></textarea>
+      <input type="submit" value="Enviar">
+    </form>
+
+  </main>
+
+  <!-- Importando ícones -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://kit.fontawesome.com/e267099c50.js" crossorigin="anonymous"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <!-- Definição de caracteres e viewport -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título da página -->
+  <title>Image Detection</title>
+
+  <!-- Importação dos arquivos CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <!-- Importação dos arquivos JS -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+
+<body>
+  <!-- Div para background -->
+  <div class="bg"></div>
+
+  <!-- Navegação -->
+  <nav>
+    <!-- Links de navegação -->
+    <a href="/"><iconify-icon icon="mingcute:diary-fill"></iconify-icon></a>
+    <a href="/scaner" class="active"><iconify-icon icon="ic:round-camera"></iconify-icon></a>
+    <a href="/chat"><iconify-icon icon="fluent-emoji-high-contrast:trident-emblem"></iconify-icon></a>
+    <a href="/mapa"><iconify-icon icon="solar:map-bold"></iconify-icon></a>
+   
+  </nav>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+
+    <!-- Perfil -->
+    <div class="card profile" style="grid-area: 1/1/2/3">
+      <h2>Olá, que bom ter você por aqui</h2>
+      <p>Hoje é um ótimo dia para pescar</p>
+    </div>
+
+    <!-- Tabela de agenda -->
+    <div class="card schedule-table" style="grid-area: span 2 / span 2">
+      <h2>Alertas da semana</h2>
+      <table>
+        <tr>
+          <th>Dia</th>
+          <th>Evento</th>
+          <th>Hora</th>
+        </tr>
+        <tr>
+          <td>Segunda</td>
+          <td>Pesca Trade Show</td>
+          <td>6:00</td>
+        </tr>
+        <tr>
+          <td>Terça</td>
+          <td>Aqui Show Brasil</td>
+          <td>7:00</td>
+        </tr>
+        <tr>
+          <td>Quarta</td>
+          <td>Temporada de piracema</td>
+          <td>Dia inteiro</td>
+        </tr>
+        <tr>
+          <td>Quinta</td>
+          <td>Temporada de piracema</td>
+          <td>Dia inteiro</td>
+        </tr>
+        <tr>
+          <td>Sexta</td>
+          <td>Temporada de piracema</td>
+          <td>Dia inteiro</td>
+        </tr>
+      </table>
+    </div>
+
+    
+
+    <!-- Desafios -->
+    <div class="card challenges" style="grid-area: span 2 / span 2">
+      <h2>Desafios</h2>
+      <ul>
+        <li>
+          <span>Pesque 30 peixes palhaços</span>
+          <div class="progresscircle" style="--progress: 33">
+            <div>10/30</div>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewbox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke-linecap="round" />
+            </svg>
+          </div>
+        </li>
+        <li>
+          <span>Pesque 4 Tucunarés</span>
+          <div class="progresscircle" style="--progress: 67">
+            <div>4/8</div>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewbox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke-linecap="round" />
+            </svg>
+          </div>
+        </li>
+        <li>
+          <span>Pesque 5 Flowerhorns</span>
+          <div class="progresscircle" style="--progress: 45">
+            <div>1/5</div>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewbox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke-linecap="round" />
+            </svg>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Melhores pessoais -->
+    <div class="card personal-bests" style="grid-area: span 2 / span 2">
+      <h2>Seu melhor</h2>
+      <ul>
+        <li>
+          Peixes pescados
+          <div class="statnum">112</div>
+        </li>
+        <li>
+          Seu peixe mais pesado
+          <div class="statnum">7kg</div>
+        </li>
+        <li>
+          Peixe mais pescado
+          <div class="statnum">Peixe palhaço</div>
+        </li>
+      </ul>
+    </div>
+
+  <!-- Importação dos scripts -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://kit.fontawesome.com/e267099c50.js" crossorigin="anonymous"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</body>
+
+</html>

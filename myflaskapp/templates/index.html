@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <!-- Metadados básicos -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título da página -->
+  <title>Image Detection</title>
+
+  <!-- Importando o CSS e o JavaScript -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+
+<body>
+  <!-- Fundo da página -->
+  <div class="bg"></div>
+
+  <!-- Navegação -->
+  <nav>
+    <!-- Links de navegação -->
+    <a href="/"><iconify-icon icon="mingcute:diary-fill"></iconify-icon></a>
+    <a href="/scaner" class="active"><iconify-icon icon="ic:round-camera"></iconify-icon></a>
+    <a href="/chat"><iconify-icon icon="fluent-emoji-high-contrast:trident-emblem"></iconify-icon></a>
+    <a href="/mapa"><iconify-icon icon="solar:map-bold"></iconify-icon></a>
+   
+  </nav>
+
+  <!-- Conteúdo principal -->
+  <div class="dashboard">
+    <!-- Formulário de detecção de imagem -->
+    <div class="card profile" style="grid-area: 1/1/3/3">
+      <div class="login">
+        <h1 style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">Detecte a imagem do seu peixe</h1>
+        <form class="f" method="post" enctype="multipart/form-data">
+          <input type="text" name="image_url" placeholder="Coloque o link da imagem aqui" />
+          <input type="file" name="image_file" />
+          <button type="submit" value="Detect" class="b">Detectar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Resultados da detecção -->
+    {% if report.web_entities %}
+    <div class="card challenges" style="grid-area: span 2 / span 2">
+      <h2>Resultados da Detecção</h2>
+      <ul>
+        {% for entity in report.web_entities %}
+        {% if loop.index <= 3 %}
+        <li>
+          <span>{{ entity.description }}</span>
+          <div class="progresscircle" style="--progress: {{ (entity.score * 100)|round(2) }}">
+            <div>{{ entity.score|round(2) }}</div>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewbox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke-linecap="round" />
+            </svg>
+          </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Resultado da análise -->
+    <div class="card exercise-table center-content" style="grid-area: span 2 / span 2">
+      <h2>Resultado da Análise</h2>
+      {% if request.method == 'POST' and image_file %}
+      <div>
+        <img class="myImage" src="{{ request.url_root }}static/{{ image_file.filename }}" alt="Imagem enviada">
+        <p>Esta é a imagem que você enviou.</p>
+      </div>
+      {% elif report.full_match %}
+      <div>
+        <img class="myImage" src="{{ report.full_match }}" alt="Imagem correspondente">
+        <p>Encontramos uma correspondência completa para a imagem fornecida.</p>
+      </div>
+      {% else %}
+      <p>Desculpe, não conseguimos encontrar uma correspondência completa para a imagem fornecida.</p>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <!-- Importando ícones -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://kit.fontawesome.com/e267099c50.js" crossorigin="anonymous"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</body>
+
+</html>

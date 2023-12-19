@@ -1,0 +1,251 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Detection</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script2.js') }}"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoCoTo3ZWQ5NGnoq5X7ZZ46m0mtMKLhdI&libraries=places&callback=initMap"
+    async defer></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script>
+    var map;
+    var markers = [];
+    var infoWindow;
+    var userMarker;
+    var directionsDisplay;
+
+    // Estilos personalizados para o mapa
+    var styles = {
+      default: null,
+      hide: [
+        {
+          featureType: 'poi',
+          stylers: [{ visibility: 'off' }]
+        },
+        {
+          featureType: 'transit',
+          elementType: 'labels.icon',
+          stylers: [{ visibility: 'on' }]
+        },
+        {
+          featureType: 'road',
+          elementType: 'labels.icon',
+          stylers: [{ visibility: 'on' }]
+        }
+      ]
+    };
+
+    function initMap() {
+      var pos = { lat: -23.558032, lng: -46.662067 }; // Coordenadas da FAAP, São Paulo
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: pos,
+        zoom: 8,
+        styles: styles.hide // Aplica os estilos ao mapa
+      });
+
+      infoWindow = new google.maps.InfoWindow;
+      directionsDisplay = new google.maps.DirectionsRenderer;
+      directionsDisplay.setMap(map);
+
+      var input = document.getElementById('searchInput');
+      var searchBox = new google.maps.places.SearchBox(input);
+
+      map.addListener('bounds_changed', function () {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      searchBox.addListener('places_changed', function () {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+
+        markers.forEach(function (marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function (place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+
+          var marker = new google.maps.Marker({
+            map: map,
+            title: place.name,
+            position: place.geometry.location,
+            icon: place.name.toLowerCase().includes('pesca') ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' :
+              place.name.toLowerCase().includes('pesqueiro') ? 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' :
+                'https://api.iconify.design/carbon/buoy.svg?width=50&height=50'
+          });
+
+          var infowindow = new google.maps.InfoWindow({
+            content: place.name
+          });
+
+          marker.addListener('click', function () {
+            infowindow.open(map, marker);
+          });
+
+          markers.push(marker);
+
+          if (place.geometry.viewport) {
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+        map.fitBounds(bounds);
+
+        searchPlaces(bounds.getCenter(), ['Pesca', 'Peixe']);
+      });
+
+      geolocate();
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+        'Erro: O serviço de geolocalização falhou.' :
+        'Erro: Seu navegador não suporta geolocalização.');
+      infoWindow.open(map);
+    }
+
+    function geolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          if (userMarker) {
+            userMarker.setMap(null);
+          }
+
+          userMarker = new google.maps.Marker({
+            position: pos,
+            map: map,
+            title: 'Você está aqui!',
+            icon: 'https://api.iconify.design/icon-park/people.svg?width=50&height=50'
+          });
+
+          map.setCenter(pos);
+          map.setZoom(15);
+
+          var queries = ['Pesca', 'Pesqueiros', 'Artigos de pesca', 'Frutos do mar', 'Represa', 'Fish'];
+          queries.forEach(function (query) {
+            searchPlaces(pos, [query]);
+          });
+        }, function () {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+      } else {
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    }
+
+    function searchPlaces(location, queries) {
+      var service = new google.maps.places.PlacesService(map);
+
+      queries.forEach(function (query) {
+        service.textSearch({
+          location: location,
+          radius: '500',
+          query: query
+        }, function (results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              createMarker(results[i]);
+            }
+          }
+        });
+      });
+    }
+
+    function createMarker(place) {
+      var marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location,
+        icon: place.name.toLowerCase().includes('pesca') ? 'https://api.iconify.design/game-icons/fishing-hook.svg?color=%232652a4&width=50&height=50' :
+          place.name.toLowerCase().includes('Pesca') ? 'https://api.iconify.design/game-icons/fishing-hook.svg?color=%232652a4&width=50&height=50' :
+            place.name.toLowerCase().includes('Pesqueiro') ? 'https://api.iconify.design/game-icons/fishing-hook.svg?color=%232652a4&width=50&height=50' :
+              place.name.toLowerCase().includes('Represa') ? 'https://api.iconify.design/game-icons/fishing-hook.svg?color=%232652a4&width=50&height=50' :
+                place.name.toLowerCase().includes('fish') ? 'https://api.iconify.design/game-icons/fishing-hook.svg?color=%232652a4&width=50&height=50' :
+                  place.name.toLowerCase().includes('Fish') ? 'https://api.iconify.design/game-icons/fishing-hook.svg?color=%232652a4&width=50&height=50' :
+                    place.descripttion.toLowerCase().includes('Loja de artigos para pesca') ? 'https://api.iconify.design/emojione/department-store.svg?color=%232652a4&width=50&height=50' :
+                      place.name.toLowerCase().includes('mar') ? 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png' : 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+      });
+
+      var infowindow = new google.maps.InfoWindow({
+        content: place.name
+      });
+
+      marker.addListener('click', function () {
+        infowindow.open(map, marker);
+      });
+
+      markers.push(marker);
+    }
+
+    function calculateAndDisplayRoute(directionsService, directionsDisplay, origin, destination) {
+      directionsService.route({
+        origin: origin,
+        destination: destination,
+        travelMode: 'DRIVING'
+      }, function (response, status) {
+        if (status === 'OK') {
+          // Apaga as rotas antigas.
+          directionsDisplay.setDirections({ routes: [] });
+          // Renderiza a nova rota.
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Não foi possível traçar a rota devido a ' + status);
+        }
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <div class="bg"></div>
+  <!-- Navegação -->
+  <nav>
+    <!-- Links de navegação -->
+    <a href="/"><iconify-icon icon="mingcute:diary-fill"></iconify-icon></a>
+    <a href="/scaner" class="active"><iconify-icon icon="ic:round-camera"></iconify-icon></a>
+    <a href="/chat"><iconify-icon icon="fluent-emoji-high-contrast:trident-emblem"></iconify-icon></a>
+    <a href="/mapa"><iconify-icon icon="solar:map-bold"></iconify-icon></a>
+
+  </nav>
+
+  <main class="maedadashboard">
+
+
+    <input id="searchInput" type="text" placeholder="Procurar local">
+    <input type="button" value="Localização atual" onclick="geolocate()">
+    <div id="map" style="height: 500px; width: 100%;"></div>
+
+
+  </main>
+
+  </div>
+
+
+
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://kit.fontawesome.com/e267099c50.js" crossorigin="anonymous"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</body>
+
+</html>
